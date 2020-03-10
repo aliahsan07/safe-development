@@ -51,8 +51,8 @@ object Safe {
 
     // execute the command.
     val result: Try[Result] = runner(config)
-
-    if (!config.silent) {
+    // TODO: removed the not from config.silent for testing. REMOVE IT LATER
+    if (config.silent) {
       result.map(res => {
         // display the result.
         command.display(res)

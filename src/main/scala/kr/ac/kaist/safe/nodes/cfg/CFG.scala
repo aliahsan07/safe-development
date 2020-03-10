@@ -44,6 +44,9 @@ case class CFG(
   def getBlock(fid: FunctionId, bid: BlockId): Option[CFGBlock] =
     funMap.get(fid).fold[Option[CFGBlock]](None) { _.getBlock(bid) }
 
+  // user vars
+  def getUserVars: List[CFGId] = globalVars
+
   private var fidCount: FunctionId = 0
   def getFId: FunctionId = fidCount
 

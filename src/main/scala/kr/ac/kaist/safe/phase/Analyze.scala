@@ -13,14 +13,20 @@ package kr.ac.kaist.safe.phase
 
 import kr.ac.kaist.safe.SafeConfig
 import kr.ac.kaist.safe.analyzer._
-import kr.ac.kaist.safe.analyzer.console.{ Console, Interactive, WebConsole }
+import kr.ac.kaist.safe.analyzer.console.{Console, Interactive, WebConsole}
+import kr.ac.kaist.safe.analyzer.domain.CKeyObject.NMap
+import kr.ac.kaist.safe.analyzer.domain.{AbsObj, AbsState}
+import kr.ac.kaist.safe.analyzer.domain.DefaultHeap.HeapMap
 import kr.ac.kaist.safe.analyzer.html_debugger.HTMLWriter
 import kr.ac.kaist.safe.nodes.cfg.CFG
 import kr.ac.kaist.safe.util._
 import kr.ac.kaist.safe.web.WebServer
-import scala.util.{ Success, Try }
+import kr.ac.kaist.safe.analyzer.model.GLOBAL_LOC
+
+import scala.util.{Success, Try}
 
 // Analyze phase
+// Heap has been constructed already.
 case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildConfig, Int), AnalyzeConfig, (CFG, Int, TracePartition, Semantics)] {
   val name: String = "analyzer"
   val help: String = "Analyze JavaScript source files."
@@ -67,7 +73,48 @@ case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildC
       println(state.toString)
     }
 
+    // pointer analysis
+    pointerAnalysis(cfg, sem.getState(exitCP))
+
     Success((cfg, iters, initTP, sem))
+  }
+
+
+  def pointerAnalysis(cfg : CFG, absHeap: AbsState): Unit = {
+
+    // Need all the variables
+    val userVars = cfg.getUserVars
+
+    val locs = absHeap.heap.getLocSet
+    val userLocs = locs.filter(loc => loc.isUser || loc == GLOBAL_LOC)
+
+    val globalLocs = locs.filter(loc => loc == GLOBAL_LOC)
+
+    val pointsToMap = userLocs.map(loc => {
+      absHeap.heap.getMap.get(loc)
+    })
+    //  => map.get(loc).map(toStringLoc(loc, _, isConcrete(loc)))
+    var nmap : NMap = null
+    globalLocs.foreach(loc => {
+//      absHeap.heap.getLocInfo(loc, absHeap.heap)
+      val locations = absHeap.heap.get(loc)
+      nmap = locations.nmap
+    })
+
+//    nmap.map
+    userVars.foreach(uservar => {
+      val pointsTo = nmap.map.get(uservar.text)
+      println(s"points to size of $uservar:")
+      println(s"${pointsTo}")
+    })
+
+
+//    userVars.foreach(v => {
+//      globalVar.asInstanceOf[AbsObj].nmap.map.get(v.text)
+//    })
+
+    println(userLocs.toString)
+
   }
 
   def defaultConfig: AnalyzeConfig = AnalyzeConfig()

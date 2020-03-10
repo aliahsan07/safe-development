@@ -1,0 +1,154 @@
+** heap **
+Some(#1:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Internal Properties:
+                                         [[Class]] -!> "Object"
+                                         [[Extensible]] -!> true
+                                         [[Prototype]] -!> #Object.prototype:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥Elem, ⊤)
+                                         Normal Properties:
+                                         ext -!> [ttt] #4:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         ins -!> [ttt] #6:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥DataProp, ⊤))
+Some(#2:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Internal Properties:
+                                         [[Class]] -!> "Object"
+                                         [[Extensible]] -!> true
+                                         [[Prototype]] -!> #Object.prototype:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥Elem, ⊤)
+                                         Normal Properties:
+                                         ext -?> [ttt] #4:Sens[(20-CFA()|LSA[i:10,j:100]())], #6:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         ins -?> [ttt] #4:Sens[(20-CFA()|LSA[i:10,j:100]())], #6:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥DataProp, ⊤))
+Some(#4:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Internal Properties:
+                                         [[Class]] -!> "Object"
+                                         [[Extensible]] -!> true
+                                         [[Prototype]] -!> #Object.prototype:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥Elem, ⊤)
+                                         Normal Properties:
+                                         DEFAULT: (⊥DataProp, ⊤))
+Some(#6:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Internal Properties:
+                                         [[Class]] -!> "Object"
+                                         [[Extensible]] -!> true
+                                         [[Prototype]] -!> #Object.prototype:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥Elem, ⊤)
+                                         Normal Properties:
+                                         DEFAULT: (⊥DataProp, ⊤))
+Some(#8:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Internal Properties:
+                                         [[Class]] -!> "Arguments"
+                                         [[Extensible]] -!> true
+                                         [[Prototype]] -!> #Object.prototype:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         DEFAULT: (⊥Elem, ⊤)
+                                         Normal Properties:
+                                         callee -!> [tft] #Math.random:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                         length -!> [tft] 0
+                                         DEFAULT: (⊥DataProp, ⊤))
+Some(#Global:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Internal Properties:
+                                              [[Class]] -!> "Object"
+                                              [[Extensible]] -!> true
+                                              [[Prototype]] -!> #Object.prototype:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              DEFAULT: (⊥Elem, ⊤)
+                                              Normal Properties:
+                                              <>Global<>global -!> [fff] #Global:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              <>Global<>true -!> [fff] true
+                                              Array -!> [tft] #Array:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Boolean -!> [tft] #Boolean:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Date -!> [tft] #Date:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Document -!> [tft] #Document:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Element -!> [tft] #Element:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Error -!> [tft] #Error:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              EvalError -!> [tft] #EvalError:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              EventTarget -!> [tft] #EventTarget:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Function -!> [tft] #Function:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              HTMLBodyElement -!> [tft] #HTMLBodyElement:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              HTMLDivElement -!> [tft] #HTMLDivElement:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              HTMLDocument -!> [tft] #HTMLDocument:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              HTMLElement -!> [tft] #HTMLElement:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              HTMLHtmlElement -!> [tft] #HTMLHtmlElement:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              HTMLIFrameElement -!> [tft] #HTMLIFrameElement:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Infinity -!> [fff] +Inf
+                                              JSON -!> [tft] #JSON:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Math -!> [tft] #Math:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              NaN -!> [fff] NaN
+                                              NamedNodeMap -!> [tft] #NamedNodeMap:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Node -!> [tft] #Node:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              NodeList -!> [tft] #NodeList:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Number -!> [tft] #Number:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              Object -!> [tft] #Object:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              RangeError -!> [tft] #RangeError:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              ReferenceError -!> [tft] #ReferenceError:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              RegExp -!> [tft] #RegExp:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              String -!> [tft] #String:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              SyntaxError -!> [tft] #SyntaxError:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              TypeError -!> [tft] #TypeError:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              URIError -!> [tft] #URIError:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              XMLHttpRequest -!> [tft] #XMLHttpRequest:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              addEventListener -!> [ttt] #EventTarget.prototype.addEventListener:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              clearTimeout -!> [ttt] #Global.clearTimeout:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              console -!> [tft] #console:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              decodeURI -!> [tft] #Global.decodeURI:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              decodeURIComponent -!> [tft] #Global.decodeURIComponent:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              dest -!> [ttf] #2:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              document -!> [tft] #document:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              encodeURI -!> [tft] #Global.encodeURI:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              encodeURIComponent -!> [tft] #Global.encodeURIComponent:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              escape -!> [tft] #Global.escape:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              eval -!> [tft] #Global.eval:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              isFinite -!> [tft] #Global.isFinite:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              isNaN -!> [tft] #Global.isNaN:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              location -!> [ftt] #location:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              navigator -!> [ftt] #Global.clientInformation:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              parseFloat -!> [tft] #Global.parseFloat:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              parseInt -!> [tft] #Global.parseInt:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              prop -!> [ttf] "ext", "ins"
+                                              requestAnimationFrame -!> [ttt] #Global.requestAnimationFrame:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              setInterval -!> [ttt] #Document.prototype.setInterval:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              setTimeout -!> [ttt] #Global.setTimeout:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              src -!> [ttf] #1:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              t -!> [ttf] #4:Sens[(20-CFA()|LSA[i:10,j:100]())], #6:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              undefined -!> [fff] Top(undefined)
+                                              unescape -!> [tft] #Global.unescape:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              window -!> [ftf] #Global:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                              DEFAULT: (⊥DataProp, ⊤))
+
+
+** context **
+Some(#10:Sens[(20-CFA()|LSA[i:10,j:100]())] -> [[Default]] @-> ⊥(value)
+                                          * Outer: )
+Some(#Collapsed:Sens[(20-CFA()|LSA[i:10,j:100]())] -> [[Default]] @-> ⊥(value)
+                                                 * Outer: null)
+Some(#GlobalEnv:Sens[(20-CFA()|LSA[i:10,j:100]())] -> Top(global environment record)
+                                                 * Outer: null)
+Some(#PureLocal:Sens[(20-CFA()|LSA[i:10,j:100]())] -> [[Default]] @-> ⊥(value)
+                                                 <>Global<>ignore1 |-> [t]#1:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>Global<>ignore2 |-> [t]#2:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>Global<>ignore3 |-> [t]#4:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>Global<>ignore4 |-> [t]#6:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>Global<>ignore5 |-> [t]"ext", "ins"
+                                                 <>arguments<>4 |-> [t]#8:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>fun<>5 |-> [t]#Math.random:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>obj<>1 |-> [t]#1:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>obj<>2 |-> [t]#1:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>obj<>3 |-> [t]#Math:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>obj<>7 |-> [t]#1:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>obj<>8 |-> [t]#2:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>this<> |-> [t]#Math:Sens[(20-CFA()|LSA[i:10,j:100]())]
+                                                 <>y<>6 |-> [t]Top(number)
+                                                 @exception @-> [t]Top(undefined)
+                                                 @exception_all @-> [t]Top(undefined)
+                                                 @return |-> [t]Top(undefined)
+                                                 * Outer: #Global:Sens[(20-CFA()|LSA[i:10,j:100]())])
+this: #Global:Sens[(20-CFA()|LSA[i:10,j:100]())]
+
+** allocated location set **
+mayAlloc: (
+#8:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#1:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#6:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#10:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#4:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#2:Sens[(20-CFA()|LSA[i:10,j:100]())]),
+mustAlloc: (
+#8:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#1:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#6:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#10:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#4:Sens[(20-CFA()|LSA[i:10,j:100]())],
+#2:Sens[(20-CFA()|LSA[i:10,j:100]())])

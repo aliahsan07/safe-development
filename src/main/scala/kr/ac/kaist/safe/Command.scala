@@ -14,7 +14,7 @@ package kr.ac.kaist.safe
 import kr.ac.kaist.safe.analyzer._
 import kr.ac.kaist.safe.errors.error.NoMode
 import kr.ac.kaist.safe.nodes.ast.Program
-import kr.ac.kaist.safe.nodes.cfg.CFG
+import kr.ac.kaist.safe.nodes.cfg.{CFG, CFGBlock, CFGInst, NormalBlock}
 import kr.ac.kaist.safe.nodes.ir.IRRoot
 import kr.ac.kaist.safe.phase._
 import kr.ac.kaist.safe.util.ArgParser
@@ -100,6 +100,7 @@ case object CmdAnalyze extends CommandObj("analyze", CmdHeapBuild >> Analyze, Ma
     val (cfg, iters, _, sem) = result
 
     println(s"- # of iteration: $iters")
+    pointerAnalysis(cfg.getUserBlocks)
     // function info.
     val userFuncs = cfg.getUserFuncs
     println(s"- # of user functions: ${userFuncs.length}")
@@ -129,6 +130,15 @@ case object CmdAnalyze extends CommandObj("analyze", CmdHeapBuild >> Analyze, Ma
     // instruction info.
     val insts = blocks.foldLeft(0)(_ + _.getInsts.length)
     println(s"- # of instructions: $insts")
+  }
+
+  def pointerAnalysis(blocks: List[CFGBlock]): Unit = {
+
+    val filteredBlocks = blocks.filter(block => block.isInstanceOf[NormalBlock])
+    filteredBlocks.foreach(block => {
+      block.getInsts
+    })
+
   }
 }
 

@@ -12,9 +12,11 @@
 package kr.ac.kaist.safe.analyzer.domain
 
 import kr.ac.kaist.safe.LINE_SEP
+import kr.ac.kaist.safe.analyzer.domain
+import kr.ac.kaist.safe.analyzer.domain.CKeyObject.NMap
 import kr.ac.kaist.safe.analyzer.model.GLOBAL_LOC
 import kr.ac.kaist.safe.util._
-import kr.ac.kaist.safe.nodes.cfg.{ CFGId, GlobalVar }
+import kr.ac.kaist.safe.nodes.cfg.{CFGId, GlobalVar}
 
 // default heap abstract domain
 object DefaultHeap extends HeapDomain {
@@ -35,6 +37,7 @@ object DefaultHeap extends HeapDomain {
   def apply(map: Map[Loc, AbsObj], merged: LocSet): Elem = HeapMap(Map(map.toSeq: _*), merged, LocSet.Bot)
 
   sealed abstract class Elem extends ElemTrait {
+
     def gamma: ConSet[Heap] = ConInf // TODO more precise
 
     def getSingle: ConSingle[Heap] = ConMany // TODO more precise
@@ -79,6 +82,11 @@ object DefaultHeap extends HeapDomain {
         val sortedSeq = map.keySet.toSeq.filter(filter).sorted
         sortedSeq.foreach(loc => s.append(toStringLoc(loc)).append(LINE_SEP))
         s.toString
+    }
+
+
+    def fetchHeapData(filter: Loc => Boolean): Seq[Loc] = {
+      this.getMap.get.keySet.toSeq.filter(filter).sorted
     }
 
     override def toString: String = {
@@ -195,6 +203,10 @@ object DefaultHeap extends HeapDomain {
       case Bot => None
       case HeapMap(map, _, _) => map.get(loc).map(toStringLoc(loc, _, isConcrete(loc)))
     }
+
+//    def getLocInfo(loc: Loc, map: domain.AbsHeap): NMap = {
+//      map.get(loc).asInstanceOf[Some].value.asInstanceOf[AbsObj].nmap
+//    }
 
     ////////////////////////////////////////////////////////////////
     // Predicates

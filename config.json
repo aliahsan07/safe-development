@@ -1,5 +1,5 @@
 {
-  "silent": true,
+  "silent": false,
   "analyzer": {
     "console": false,
     "exitDump": false,
