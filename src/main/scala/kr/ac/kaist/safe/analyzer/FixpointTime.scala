@@ -17,6 +17,8 @@ import kr.ac.kaist.safe.nodes.cfg._
 import kr.ac.kaist.safe.util.Useful
 import kr.ac.kaist.safe.LINE_SEP
 
+import scala.collection.mutable
+
 class FixpointTime(
     semantics: Semantics,
     override val consoleOpt: Option[Interactive],
@@ -28,7 +30,7 @@ class FixpointTime(
   private var blockTime: Map[CFGBlock, TimeInfo] = Map()
   private var funcTime: Map[CFGFunction, TimeInfo] = Map()
 
-  override def compute(initIters: Int = 0): (Int, Double) = {
+  override def compute(initIters: Int = 0): (Int, Double, mutable.Map[(String, Int), LocSet]) = {
     var iters = initIters
     while (!worklist.isEmpty) {
       iters += 1
@@ -63,7 +65,7 @@ class FixpointTime(
       }
     })
 
-    (iters, totalTime)
+    (iters, totalTime, semantics.pointsToSet)
   }
 
   override def computeOneStep: Unit = {

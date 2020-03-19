@@ -14,6 +14,9 @@ package kr.ac.kaist.safe.analyzer
 import kr.ac.kaist.safe.analyzer.domain._
 import kr.ac.kaist.safe.analyzer.console.Interactive
 import kr.ac.kaist.safe.nodes.cfg._
+import kr.ac.kaist.safe.util.HashMap
+
+import scala.collection.mutable
 
 class Fixpoint(
     semantics: Semantics,
@@ -21,7 +24,7 @@ class Fixpoint(
 ) {
   def worklist: Worklist = semantics.worklist
 
-  def compute(initIters: Int = 0): (Int, Double) = {
+  def compute(initIters: Int = 0): (Int, Double, mutable.Map[(String, Int), LocSet]) = {
     // set the start time.
     val startTime = System.nanoTime
 
@@ -32,10 +35,11 @@ class Fixpoint(
     }
     consoleOpt.foreach(_.runFinished)
 
+
     // calculate duration
     val duration = (System.nanoTime - startTime) / 1e9
 
-    (iters, duration)
+    (iters, duration, semantics.pointsToSet)
   }
 
   var cpSet: Set[CFGBlock] = Set()

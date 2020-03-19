@@ -26,6 +26,9 @@ case class Span(
   def addLines(line: Int, offset: Int): Span =
     Span(fileName, begin.addLines(line, offset), end.addLines(line, offset))
 
+  def getLineNumber: Int =
+    begin.line
+
   override def toString: String =
     appendToStr(new StringBuilder).toString
 

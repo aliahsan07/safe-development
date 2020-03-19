@@ -23,6 +23,7 @@ import kr.ac.kaist.safe.util._
 import kr.ac.kaist.safe.web.WebServer
 import kr.ac.kaist.safe.analyzer.model.GLOBAL_LOC
 
+import scala.collection.mutable
 import scala.util.{Success, Try}
 
 // Analyze phase
@@ -30,6 +31,8 @@ import scala.util.{Success, Try}
 case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildConfig, Int), AnalyzeConfig, (CFG, Int, TracePartition, Semantics)] {
   val name: String = "analyzer"
   val help: String = "Analyze JavaScript source files."
+
+
 
   def apply(
     in: (CFG, Semantics, TracePartition, HeapBuildConfig, Int),
@@ -46,7 +49,7 @@ case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildC
     val fixpoint =
       if (config.timeLog) new FixpointTime(sem, interOpt, "block.csv", "func.csv")
       else new Fixpoint(sem, interOpt)
-    val (iters, duration) = fixpoint.compute(iter + 1)
+    val (iters, duration, pointsToSet) = fixpoint.compute(iter + 1)
 
     // display duration time
     if (config.time) {
@@ -74,46 +77,61 @@ case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildC
     }
 
     // pointer analysis
-    pointerAnalysis(cfg, sem.getState(exitCP))
+    pointerAnalysis(cfg, sem.getState(exitCP), pointsToSet)
 
     Success((cfg, iters, initTP, sem))
   }
 
 
-  def pointerAnalysis(cfg : CFG, absHeap: AbsState): Unit = {
+  def pointerAnalysis(cfg : CFG, absHeap: AbsState, pointsToSet: mutable.Map[(String, Int), domain.LocSet]): Unit = {
 
     // Need all the variables
-    val userVars = cfg.getUserVars
-
-    val locs = absHeap.heap.getLocSet
-    val userLocs = locs.filter(loc => loc.isUser || loc == GLOBAL_LOC)
-
-    val globalLocs = locs.filter(loc => loc == GLOBAL_LOC)
-
-    val pointsToMap = userLocs.map(loc => {
-      absHeap.heap.getMap.get(loc)
-    })
-    //  => map.get(loc).map(toStringLoc(loc, _, isConcrete(loc)))
-    var nmap : NMap = null
-    globalLocs.foreach(loc => {
-//      absHeap.heap.getLocInfo(loc, absHeap.heap)
-      val locations = absHeap.heap.get(loc)
-      nmap = locations.nmap
-    })
-
-//    nmap.map
-    userVars.foreach(uservar => {
-      val pointsTo = nmap.map.get(uservar.text)
-      println(s"points to size of $uservar:")
-      println(s"${pointsTo}")
-    })
-
-
-//    userVars.foreach(v => {
-//      globalVar.asInstanceOf[AbsObj].nmap.map.get(v.text)
+//    val userVars = cfg.getUserVars
+//
+//    val locs = absHeap.heap.getLocSet
+//    val userLocs = locs.filter(loc => loc.isUser || loc == GLOBAL_LOC)
+//
+//    val globalLocs = locs.filter(loc => loc == GLOBAL_LOC)
+//
+//    val pointsToMap = userLocs.map(loc => {
+//      absHeap.heap.getMap.get(loc)
 //    })
+//    //  => map.get(loc).map(toStringLoc(loc, _, isConcrete(loc)))
+//    var nmap : NMap = null
+//    globalLocs.foreach(loc => {
+////      absHeap.heap.getLocInfo(loc, absHeap.heap)
+//      val locations = absHeap.heap.get(loc)
+//      nmap = locations.nmap
+//    })
+//
+////    nmap.map
+//    userVars.foreach(uservar => {
+//      val pointsTo = nmap.map.get(uservar.text)
+//      println(s"points to size of $uservar:")
+//      println(s"${pointsTo}")
+//    })
+//
+//
+////    userVars.foreach(v => {
+////      globalVar.asInstanceOf[AbsObj].nmap.map.get(v.text)
+////    })
+//
+//    println(userLocs.toString)
 
-    println(userLocs.toString)
+    while(true) {
+      println("Enter variable name followed by line number to prints its points to set")
+      val name = scala.io.StdIn.readLine("Variable name? ")
+      println("Line Number? ")
+      val lineNumber = scala.io.StdIn.readInt()
+
+      val pointsTo = pointsToSet.get((name, lineNumber))
+
+      pointsTo match {
+        case Some(value) => println("Points to Set: ".concat(pointsTo.toString))
+        case None => println("Error in key")
+      }
+
+    }
 
   }
 

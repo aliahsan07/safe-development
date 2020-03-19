@@ -27,6 +27,8 @@ case class Semantics(
     worklist: Worklist
 ) {
   lazy val engine = new ScriptEngineManager().getEngineByMimeType("text/javascript")
+  var pointsToSet =  scala.collection.mutable.Map[(String, Int), LocSet]()
+
   def init: Unit = {
     val entry = cfg.globalFunc.entry
     val entryCP = ControlPoint(entry, getState(entry).head match { case (tp, _) => tp })
@@ -268,12 +270,14 @@ case class Semantics(
         val newExcSt = st.raiseException(excSet)
         (st1, excSt ⊔ newExcSt)
       }
+        // can possibly store the points to information here
       case CFGExprStmt(_, _, x, e) => {
         val (v, excSet) = V(e, st)
         val st1 =
           if (!v.isBottom) st.varStore(x, v)
           else AbsState.Bot
         val newExcSt = st.raiseException(excSet)
+        pointsToSet += ((x.text, i.span.getLineNumber) -> v.locset) // TODO: for non-pointers look at pvalue
         (st1, excSt ⊔ newExcSt)
       }
       case CFGDelete(_, _, x1, CFGVarRef(_, x2)) => {
@@ -346,6 +350,7 @@ case class Semantics(
           }
 
         val newExcSt = st.raiseException(excSet1)
+//        pointsToSet += ((idxV.pvalue.strval, i.span.getLineNumber) -> vRhs.locset)
         (st.copy(heap = heap1), excSt ⊔ newExcSt)
       }
       case CFGStoreStringIdx(_, block, obj, strIdx, rhs) => {
