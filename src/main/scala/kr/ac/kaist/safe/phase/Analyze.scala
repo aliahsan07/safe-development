@@ -77,13 +77,14 @@ case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildC
     }
 
     // pointer analysis
-    pointerAnalysis(cfg, sem.getState(exitCP), pointsToSet)
+
+    pointerAnalysis(cfg, sem.getState(exitCP), pointsToSet, config.pointer.get, config.line.get)
 
     Success((cfg, iters, initTP, sem))
   }
 
 
-  def pointerAnalysis(cfg : CFG, absHeap: AbsState, pointsToSet: mutable.Map[(String, Int), domain.LocSet]): Unit = {
+  def pointerAnalysis(cfg : CFG, absHeap: AbsState, pointsToSet: mutable.Map[(String, Int), domain.LocSet], pointer: String, line: Int): Unit = {
 
     // Need all the variables
 //    val userVars = cfg.getUserVars
@@ -118,20 +119,31 @@ case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildC
 //
 //    println(userLocs.toString)
 
-    while(true) {
-      println("Enter variable name followed by line number to prints its points to set")
-      val name = scala.io.StdIn.readLine("Variable name? ")
-      println("Line Number? ")
-      val lineNumber = scala.io.StdIn.readInt()
+//
 
-      val pointsTo = pointsToSet.get((name, lineNumber))
+    println("Points to set")
+    val pointsTo = pointsToSet.get((pointer, line))
 
-      pointsTo match {
-        case Some(value) => println("Points to Set: ".concat(pointsTo.toString))
-        case None => println("Error in key")
-      }
-
+    pointsTo match {
+      case Some(value) => println("Points to Set: ".concat(pointsTo.toString))
+      case None => println("Error in key")
     }
+
+
+//    while(true) {
+//      println("Enter variable name followed by line number to prints its points to set")
+//      val name = scala.io.StdIn.readLine("Variable name? ")
+//      println("Line Number? ")
+//      val lineNumber = scala.io.StdIn.readInt()
+//
+//      val pointsTo = pointsToSet.get((name, lineNumber))
+//
+//      pointsTo match {
+//        case Some(value) => println("Points to Set: ".concat(pointsTo.toString))
+//        case None => println("Error in key")
+//      }
+//
+//    }
 
   }
 
@@ -150,7 +162,11 @@ case object Analyze extends PhaseObj[(CFG, Semantics, TracePartition, HeapBuildC
     ("out", StrOption((c, s) => c.outFile = Some(s)),
       "the analysis results will be written to the outfile."),
     ("html", StrOption((c, s) => c.htmlName = Some(s)),
-      "the resulting CFG with states will be drawn to the {string}.html")
+      "the resulting CFG with states will be drawn to the {string}.html"),
+    ("pointer", StrOption((c, s) => c.pointer = Some(s)),
+      "provide variable name to compute its points to set"),
+    ("line", NumOption((c, s) => c.line = Some(s)),
+      "provide line number for pointer analysis")
   )
 }
 
@@ -162,5 +178,7 @@ case class AnalyzeConfig(
   var timeLog: Boolean = false,
   var exitDump: Boolean = false,
   var outFile: Option[String] = None,
-  var htmlName: Option[String] = None
+  var htmlName: Option[String] = None,
+  var pointer: Option[String] = None,
+  var line: Option[Int] = None
 ) extends Config
