@@ -27,7 +27,7 @@ case class Semantics(
     worklist: Worklist
 ) {
   lazy val engine = new ScriptEngineManager().getEngineByMimeType("text/javascript")
-  var pointsToSet =  scala.collection.mutable.Map[(String, Int), LocSet]()
+  var pointsToSet = scala.collection.mutable.Map[(String, Int), LocSet]()
 
   def init: Unit = {
     val entry = cfg.globalFunc.entry
@@ -221,6 +221,12 @@ case class Semantics(
     }
   }
 
+  def getLocationSet(locset: LocSet): List[String] = {
+    var list = List.empty[String]
+    List(locset).foreach(x => { list = x.value.toString :: list })
+    list
+  }
+
   def I(cp: ControlPoint, i: CFGNormalInst, st: AbsState, excSt: AbsState): (AbsState, AbsState) = {
     val tp = cp.tracePartition
     i match {
@@ -270,14 +276,16 @@ case class Semantics(
         val newExcSt = st.raiseException(excSet)
         (st1, excSt ⊔ newExcSt)
       }
-        // can possibly store the points to information here
+      // can possibly store the points to information here
       case CFGExprStmt(_, _, x, e) => {
         val (v, excSet) = V(e, st)
         val st1 =
           if (!v.isBottom) st.varStore(x, v)
           else AbsState.Bot
         val newExcSt = st.raiseException(excSet)
+        getLocationSet(v.locset)
         pointsToSet += ((x.text, i.span.getLineNumber) -> v.locset) // TODO: for non-pointers look at pvalue
+
         (st1, excSt ⊔ newExcSt)
       }
       case CFGDelete(_, _, x1, CFGVarRef(_, x2)) => {
@@ -327,13 +335,18 @@ case class Semantics(
         val newExcSt = st.raiseException(excSet)
         (st2, excSt ⊔ newExcSt)
       }
+      // object properties?
       case CFGStore(_, block, obj, index, rhs) => {
         // locSet must not be empty because obj is coming through <>toObject.
         val (value, _) = V(obj, st)
         val locSet = value.locset
+        //        val localName = index.asInstanceOf[CFGVarRef].id.asInstanceOf[CFGUserId].originalName
 
         val (idxV, excSetIdx) = V(index, st)
         val (vRhs, esRhs) = V(rhs, st)
+        // TODO: hack to get the property name
+        val sizeOfString = index.toString().size
+        val localName = if (index.toString().slice(0, 1) == "\"") index.toString().slice(1, sizeOfString - 1) else index.toString()
 
         val (heap1, excSet1) =
           (idxV, vRhs) match {
@@ -350,7 +363,10 @@ case class Semantics(
           }
 
         val newExcSt = st.raiseException(excSet1)
-//        pointsToSet += ((idxV.pvalue.strval, i.span.getLineNumber) -> vRhs.locset)
+        pointsToSet += ((localName, i.span.getLineNumber) -> vRhs.locset)
+
+        //        pointsToSet += ((idxV.pvalue.strval., i.span.getLineNumber) -> vRhs.locset)
+
         (st.copy(heap = heap1), excSt ⊔ newExcSt)
       }
       case CFGStoreStringIdx(_, block, obj, strIdx, rhs) => {
@@ -753,6 +769,10 @@ case class Semantics(
             (st2, excSet1 ++ excSet2)
           }
         val newExcSt = st.raiseException(newExcSet)
+        //        pointsToSet += ((expr.id.originalName, expr.ir.span.getLineNumber) -> v.locset)
+        if (expr.isInstanceOf[CFGVarRef] && expr.asInstanceOf[CFGVarRef].id.isInstanceOf[CFGUserId]) {
+          pointsToSet += ((expr.asInstanceOf[CFGVarRef].id.asInstanceOf[CFGUserId].originalName, expr.ir.span.getLineNumber) -> v.locset)
+        }
         (newSt, excSt ⊔ newExcSt)
       }
       case (NodeUtil.INTERNAL_IS_CALLABLE, List(expr), None) => {
@@ -1661,6 +1681,7 @@ case class Semantics(
 
     (st2, excSt ⊔ newExcSt)
   }
+
 }
 
 // Interprocedural edges

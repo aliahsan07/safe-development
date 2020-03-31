@@ -1,13 +1,8 @@
-var src = {}
-var dest = {}
+function evalAlias(dest, d2) {
+  var result = dest.roll * 5;
+  return result;
+}
 
-src["ext"] = {}
-src["ins"] = {}
-
-var prop = Math.random() > 0.50 ? "ext" : "ins";
-
-var t = src[prop];
-
-dest[prop] = t;
-
+var src = { text: "UTD", roll: 23 };
+var test = evalAlias(src);
 

@@ -22,6 +22,7 @@ case class TraceSensLoc(
     tp: TracePartition
 ) extends Loc {
   override def toString: String = s"${loc}:Sens[${tp}]"
+  def getLoc: String = loc.toString
 }
 object TraceSensLoc {
   def apply(name: String, tp: TracePartition): TraceSensLoc =

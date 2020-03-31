@@ -89,6 +89,8 @@ libraryDependencies ++= Seq(
   "org.jline" % "jline" % "3.10.0"
 )
 
+libraryDependencies += "com.google.code.gson" % "gson" % "2.8.6"
+
 javacOptions ++= Seq("-encoding", "UTF-8")
 
 retrieveManaged := true

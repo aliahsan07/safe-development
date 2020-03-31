@@ -76,6 +76,7 @@ case class CFGVal(
     value: EJSVal
 ) extends CFGExpr {
   val ir: IRNode = NodeUtil.TEMP_IR
+  def getValue: EJSVal = value
   override def toString: String = value.toString
 }
 object CFGVal {

@@ -28,6 +28,7 @@ case class EJSString(
     str: String
 ) extends EJSVal {
   override def toString: String = "\"" + NodeUtil.pp(str) + "\""
+  def strVal: String = str
 }
 
 // true | false

@@ -14,7 +14,7 @@ package kr.ac.kaist.safe
 import kr.ac.kaist.safe.analyzer._
 import kr.ac.kaist.safe.errors.error.NoMode
 import kr.ac.kaist.safe.nodes.ast.Program
-import kr.ac.kaist.safe.nodes.cfg.{CFG, CFGBlock, CFGInst, NormalBlock}
+import kr.ac.kaist.safe.nodes.cfg.{ CFG, CFGBlock, CFGInst, NormalBlock }
 import kr.ac.kaist.safe.nodes.ir.IRRoot
 import kr.ac.kaist.safe.phase._
 import kr.ac.kaist.safe.util.ArgParser
